@@ -12,14 +12,9 @@
 */
 
 Route::get('/', function () {
-    return \App\Book::with('scores', 'author')->get();
-});
-
-Route::get('/search', function (\Illuminate\Http\Request $request) {
-    return \App\Book::with('author', 'scores')
-        ->where('title', 'like',  "%$request->search%")
-        ->orWhereHas('author', function ($query) use ($request) {
-            return $query->where('name', 'like', "%$request->search%");
-        })
-        ->get();
+    return \App\Book::distinct()
+        ->join('scores', 'books.id', '=', 'scores.book_id')
+        ->groupBy('title', 'books.id', 'scores.id')
+        ->orderBy('score')
+        ->get('title');
 });

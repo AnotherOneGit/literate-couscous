@@ -61,4 +61,14 @@ class BookController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+    {
+        return Book::with('author', 'scores')
+            ->where('title', 'like',  "%$request->search%")
+            ->orWhereHas('author', function ($query) use ($request) {
+                return $query->where('name', 'like', "%$request->search%");
+            })
+            ->get();
+    }
 }

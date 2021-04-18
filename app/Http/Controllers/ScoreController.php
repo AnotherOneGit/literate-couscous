@@ -25,7 +25,10 @@ class ScoreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            return Score::create([
+                'book_id' => $request->book_id,
+                'score' => $request->score
+            ]);
     }
 
     /**
