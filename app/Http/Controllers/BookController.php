@@ -14,7 +14,11 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        return Book::
+        join('scores', 'books.id', 'scores.book_id')
+            ->groupBy('title')
+            ->orderBy(\DB::raw('AVG(score)'), 'desc')
+            ->get('title');
     }
 
     /**
@@ -25,7 +29,10 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Book::create([
+            'author_id' => $request->author_id,
+            'title' => $request->title
+        ]);
     }
 
     /**
@@ -36,7 +43,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        return Book::findOrFail($book);
     }
 
     /**

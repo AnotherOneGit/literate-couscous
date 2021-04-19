@@ -25,7 +25,9 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Author::create([
+            'name' => $request->name
+        ]);
     }
 
     /**
@@ -36,7 +38,7 @@ class AuthorController extends Controller
      */
     public function show(Author $author)
     {
-        //
+        return Author::findOrFail($author);
     }
 
     /**
