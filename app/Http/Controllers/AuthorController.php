@@ -50,7 +50,8 @@ class AuthorController extends Controller
      */
     public function update(Request $request, Author $author)
     {
-        //
+        $author->name = $request->name;
+        $author->save();
     }
 
     /**
@@ -61,6 +62,6 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
-        //
+        $author->delete();
     }
 }

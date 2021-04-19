@@ -18,12 +18,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/authors', 'AuthorController@index');
-Route::get('/authors/{author}', 'AuthorController@show');
 Route::post('/authors', 'AuthorController@store');
+Route::get('/authors/{author}', 'AuthorController@show');
+Route::put('/authors/{author}', 'AuthorController@update');
+Route::delete('/authors/{author}', 'AuthorController@destroy');
 
 Route::get('/books', 'BookController@index');
-Route::get('/books/{book}', 'BookController@show');
 Route::post('/books', 'BookController@store');
+Route::get('/books/{book}', 'BookController@show');
+Route::put('/books/{book}', 'BookController@update');
+Route::delete('/books/{book}', 'BookController@destroy');
 
 Route::get('/search', 'BookController@search');
 

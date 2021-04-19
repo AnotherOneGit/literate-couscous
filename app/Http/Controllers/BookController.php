@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -18,7 +19,7 @@ class BookController extends Controller
         join('scores', 'books.id', 'scores.book_id')
             ->groupBy('title')
             ->orderBy(\DB::raw('AVG(score)'), 'desc')
-            ->get('title');
+            ->get(['title', \DB::raw('AVG(score) average_score')]);
     }
 
     /**
@@ -55,7 +56,8 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        $book->title = $request->title;
+        $book->save();
     }
 
     /**
@@ -66,16 +68,16 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
     }
 
     public function search(Request $request)
     {
-        return Book::with('author', 'scores')
+        return Book::join('authors', 'books.author_id', 'authors.id')
             ->where('title', 'like',  "%$request->search%")
             ->orWhereHas('author', function ($query) use ($request) {
                 return $query->where('name', 'like', "%$request->search%");
             })
-            ->get();
+            ->get(['title', 'name']);
     }
 }
