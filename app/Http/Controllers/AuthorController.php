@@ -52,6 +52,7 @@ class AuthorController extends Controller
     {
         $author->name = $request->name;
         $author->save();
+        return $author;
     }
 
     /**

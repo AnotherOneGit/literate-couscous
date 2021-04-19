@@ -17,18 +17,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/authors', 'AuthorController@index');
-Route::post('/authors', 'AuthorController@store');
-Route::get('/authors/{author}', 'AuthorController@show');
-Route::put('/authors/{author}', 'AuthorController@update');
-Route::delete('/authors/{author}', 'AuthorController@destroy');
+Route::get('/authors', 'AuthorController@index')->name('author.index');
+Route::post('/authors', 'AuthorController@store')->name('author.store');
+Route::get('/authors/{author}', 'AuthorController@show')->name('author.show');
+Route::put('/authors/{author}', 'AuthorController@update')->name('author.update');
+Route::delete('/authors/{author}', 'AuthorController@destroy')->name('author.destroy');
 
-Route::get('/books', 'BookController@index');
-Route::post('/books', 'BookController@store');
-Route::get('/books/{book}', 'BookController@show');
-Route::put('/books/{book}', 'BookController@update');
-Route::delete('/books/{book}', 'BookController@destroy');
+Route::get('/books', 'BookController@index')->name('book.index');
+Route::post('/books', 'BookController@store')->name('book.store');
+Route::get('/books/{book}', 'BookController@show')->name('book.show');
+Route::put('/books/{book}', 'BookController@update')->name('book.update');
+Route::delete('/books/{book}', 'BookController@destroy')->name('book.destroy');
 
-Route::get('/search', 'BookController@search');
+Route::get('/search', 'BookController@search')->name('book.search');
 
-Route::post('/score', 'ScoreController@store');
+Route::post('/score', 'ScoreController@store')->name('score.store');
