@@ -12,9 +12,5 @@
 */
 
 Route::get('/', function () {
-    return \App\Book::distinct()
-        ->join('scores', 'books.id', '=', 'scores.book_id')
-        ->groupBy('title', 'books.id', 'scores.id')
-        ->orderBy('score')
-        ->get('title');
+    return 'add API in url';
 });
