@@ -13,19 +13,22 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Book::
-        join('scores', 'books.id', 'scores.book_id')
-            ->groupBy('title')
-            ->orderBy(\DB::raw('AVG(score)'), 'desc')
-            ->get(['title', \DB::raw('AVG(score) average_score')]);
+        if ($request->has('sort')) {
+            return Book::
+            join('scores', 'books.id', 'scores.book_id')
+                ->groupBy('title')
+                ->orderBy(\DB::raw('AVG(score)'), 'desc')
+                ->get(['title', \DB::raw('AVG(score) average_score')]);
+        }
+        return Book::get();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -39,7 +42,7 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Book  $book
+     * @param \App\Book $book
      * @return \Illuminate\Http\Response
      */
     public function show(Book $book)
@@ -50,20 +53,21 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Book  $book
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Book $book
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Book $book)
     {
         $book->title = $request->title;
         $book->save();
+        return $book;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Book  $book
+     * @param \App\Book $book
      * @return \Illuminate\Http\Response
      */
     public function destroy(Book $book)
@@ -74,7 +78,7 @@ class BookController extends Controller
     public function search(Request $request)
     {
         return Book::join('authors', 'books.author_id', 'authors.id')
-            ->where('title', 'like',  "%$request->search%")
+            ->where('title', 'like', "%$request->search%")
             ->orWhereHas('author', function ($query) use ($request) {
                 return $query->where('name', 'like', "%$request->search%");
             })

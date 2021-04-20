@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Score;
 
 class ScoreSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class ScoreSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(Score::class, 2)->create();
     }
 }

@@ -32,7 +32,7 @@ class AuthorApiTest extends TestCase
     {
         $author = factory(Author::class)->create();
         $updatedData = [
-            'name' => 'Author Two'
+            'name' => 'Test Author'
         ];
         $this->json('PUT', route('author.update', $author->id), $updatedData)
             ->assertStatus(200)
