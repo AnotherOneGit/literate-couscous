@@ -11,6 +11,6 @@
 |
 */
 
-//Route::get('/', function () {
-//    return 'add API in url';
-//});
+Route::get('/', function () {
+    return view('welcome');
+});
