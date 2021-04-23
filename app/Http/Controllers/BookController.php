@@ -16,8 +16,7 @@ class BookController extends Controller
     public function index(Request $request)
     {
         if ($request->has('sort')) {
-            return Book::
-            join('scores', 'books.id', 'scores.book_id')
+            return Book::join('scores', 'books.id', 'scores.book_id')
                 ->groupBy('title')
                 ->orderBy(\DB::raw('AVG(score)'), 'desc')
                 ->get(['title', \DB::raw('AVG(score) average_score')]);
